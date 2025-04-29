@@ -21,6 +21,7 @@
   "description": "",
   "dependencies": {
     "dotenv": "^16.5.0",
-    "openai": "^4.96.2"
+    "openai": "^4.96.2",
+    "prompt-sync": "^4.2.0"
   }
 }
