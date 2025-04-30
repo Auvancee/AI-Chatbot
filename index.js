@@ -4,6 +4,7 @@ import OpenAI from "openai";
 // Removed unused imports
 import { createRequire } from "module";
 const require =  createRequire(import.meta.url)
+const prompt = require('prompt-sync')()
 require('dotenv').config()
 
 
@@ -45,7 +46,13 @@ const sendPrompt = async () => {
         messages: currentMessages
     })
 
-    console.log(completion.choices[0].message)
+    let response = completion.choices[0].message.content
+    messages.push({
+        role: "assistant",
+        content: response
+      });
+    console.log(response.content)
+    getUserInput()
 
     // try {
     //     const response = await openai.createChatCompletion({
@@ -61,7 +68,17 @@ const sendPrompt = async () => {
 
 // [4] To create a run function that requests a user input
 const run = async () => {
-    await sendPrompt()
+    getUserInput()
+} 
+
+const  getUserInput = async() => {
+    let newUserInput = prompt('How would you like to respond?')
+    messages.push({
+        'role': 'user',
+        "content": newUserInput
+    })
+    await sendPrompt();
+
 }
 
 run()
